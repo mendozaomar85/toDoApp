@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>To Do App</title>
+        <script src="https://unpkg.com/vue"></script>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        
+    </head>
+    <body>
+        <div id="toDoList">
+            <h1>To Do List</h1>
+            <h2>Total Items {{ total}}</h2>
+            <p id="name"> {{ name }}</p>
+            <p id="paragraph"> {{ description }}</p>
+            <!--<p id="listCount"> {{ total + " items on my list" + " " + incomplete + " incomplete items on my list " + complete + " items completed"}}</p>-->
+            <form v-on:submit.prevent="addItem">
+                <input v-model="name" type="text" name="name">
+                <input v-model="description" type="text"  name="description">
+                <button type="submit">Add New Item</button>
+            </form>
+            <div class="list" id="incomplete">
+                <h3>Incomplete Tasks {{ incomplete }}</h3>
+                <ul v-for="item in items">
+                    <li v-bind:class="{complete: item.status }" v-if="!item.status">
+                        {{item.name}} - {{item.description}} <button v-on:click="completeItem(item.id)">Complete</button><button v-on:click="removeItem(item.id)">Delete</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="list" id="complete">
+                <h3>Completed Tasks {{ complete }} </h3>
+                <ul v-for="item in items" v-if="item.status">
+                    <li v-bind:class="{complete: item.status }">
+                        {{item.name}} - {{item.description}} <button v-on:click="completeItem(item.id)">Complete</button><button v-on:click="removeItem(item.id)">Delete</button>
+                    </li>
+                </ul>
+                </div>
+        </div>
+        <style>
+        .complete {
+            text-decoration: line-through;
+        }
+        </style>
+        <script type="text/javascript"  src="javascript.js"></script>
+    </body>
+</html>
